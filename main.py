@@ -1,5 +1,3 @@
-
-
 import pychromecast as pyc
 import controller as cont
 import time
@@ -21,7 +19,7 @@ class cast_idle_sceen(object):
         self.device.register_handler(controller)
 
     def new_cast_status(self, status):
-        # print(status)
+        print(status)
         if(status.is_stand_by and status.app_id == self.backdrop_id):
             self.on_idle_state(status)
         if(status.is_stand_by and
@@ -43,12 +41,3 @@ idle_screen = cast_idle_sceen(chromecasts[0], 'F6EF1BA7')
 
 controller = cont.DashboardController('http://192.168.123.23:8080/home')
 idle_screen.register_controller(controller)
-#
-# cast.start_app('F6EF1BA7')
-#
-#
-# time.sleep(5)
-# print("READY")
-#
-#
-# controller.send_msg({'url': 'http://192.168.123.23:8080/home'})
