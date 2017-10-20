@@ -1,7 +1,6 @@
 import pychromecast as pyc
 import controller as cont
 import time
-import thread
 
 
 class cast_idle_sceen(object):
@@ -32,7 +31,9 @@ class cast_idle_sceen(object):
     def on_idle_state(self, status):
         # print(status)
         print("Starting idle app")
-        self.device.start_app(self.new_idle_app_id)
+        # self.device.start_app(self.new_idle_app_id)
+        self.receiver_controller.launch_app(self.new_idle_app_id, force_launch=True)
+        print('Start_app sent')
 
     def on_idle_app_start(self):
         print('On Start Command')
