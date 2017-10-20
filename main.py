@@ -31,8 +31,8 @@ class cast_idle_sceen(object):
     def on_idle_state(self, status):
         # print(status)
         print("Starting idle app")
-        # self.device.start_app(self.new_idle_app_id)
-        self.receiver_controller.launch_app(self.new_idle_app_id, force_launch=True)
+        self.device.start_app(self.new_idle_app_id)
+        # self.receiver_controller.launch_app(self.new_idle_app_id, force_launch=True)
         print('Start_app sent')
 
     def on_idle_app_start(self):
@@ -42,7 +42,7 @@ class cast_idle_sceen(object):
 
 chromecasts = pyc.get_chromecasts()
 
-idle_screen = cast_idle_sceen(chromecasts[0], 'F6EF1BA7')
+idle_screen = cast_idle_sceen(chromecasts[0], 'E87B453C')
 
-controller = cont.DashboardController('http://192.168.123.23:8080/home')
+controller = cont.DashboardController('http://192.168.123.19:8080/home')
 idle_screen.register_controller(controller)
