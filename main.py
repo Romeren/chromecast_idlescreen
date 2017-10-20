@@ -31,6 +31,7 @@ class cast_idle_sceen(object):
         # print(status)
         print("Starting idle app")
         self.device.start_app(self.new_idle_app_id)
+        print("DONE starting)
 
     def on_idle_app_start(self):
         print('On Start Command')
