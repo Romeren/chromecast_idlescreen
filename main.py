@@ -1,6 +1,7 @@
 import pychromecast as pyc
 import controller as cont
 import time
+import thread
 
 
 class cast_idle_sceen(object):
@@ -13,6 +14,7 @@ class cast_idle_sceen(object):
         self.receiver_controller = self.socket_client.receiver_controller
         self.receiver_controller.register_status_listener(self)
         self.new_idle_app_id = new_idle_app_id
+        device.wait()
 
     def register_controller(self, controller):
         self.idle_controller = controller
@@ -31,11 +33,11 @@ class cast_idle_sceen(object):
         # print(status)
         print("Starting idle app")
         self.device.start_app(self.new_idle_app_id)
-        print("DONE starting")
 
     def on_idle_app_start(self):
         print('On Start Command')
         self.idle_controller.on_app_start()
+
 
 chromecasts = pyc.get_chromecasts()
 
