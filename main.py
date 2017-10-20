@@ -33,6 +33,7 @@ class cast_idle_sceen(object):
         self.device.start_app(self.new_idle_app_id)
 
     def on_idle_app_start(self):
+        print('On Start Command')
         self.idle_controller.on_app_start()
 
 chromecasts = pyc.get_chromecasts()
