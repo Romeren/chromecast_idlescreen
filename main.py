@@ -13,7 +13,7 @@ class cast_idle_sceen(object):
         self.receiver_controller = self.socket_client.receiver_controller
         self.receiver_controller.register_status_listener(self)
         self.new_idle_app_id = new_idle_app_id
-        device.wait()
+        # device.wait()
 
     def register_controller(self, controller):
         self.idle_controller = controller
@@ -41,8 +41,21 @@ class cast_idle_sceen(object):
 
 
 chromecasts = pyc.get_chromecasts()
+cast = None
+if(len(chromecasts) = 0):
+	cast = pyc.ChromeCast('192.168.2.3')
+else:
+	cast = chromecasts[0]
 
-idle_screen = cast_idle_sceen(chromecasts[0], 'E87B453C')
+try:
+	idle_screen = cast_idle_sceen(cast, 'F6EF1BA7')
+	controller = cont.DashboardController('http://google.nl')
+	idle_screen.register_controller(controller)
+except Exception as e:
+	print(e)
 
-controller = cont.DashboardController('http://192.168.123.19:8080/home')
-idle_screen.register_controller(controller)
+
+
+
+
+
