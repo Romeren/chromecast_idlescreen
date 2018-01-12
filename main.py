@@ -43,7 +43,7 @@ class cast_idle_sceen(object):
 chromecasts = pyc.get_chromecasts()
 cast = None
 if(len(chromecasts) == 0):
-	cast = pyc.ChromeCast('192.168.2.3')
+	cast = pyc.Chromecast('192.168.2.3')
 else:
 	cast = chromecasts[0]
 
