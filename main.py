@@ -33,8 +33,9 @@ class cast_idle_sceen(object):
         print("Starting idle app")
         # self.device.start_app(self.new_idle_app_id)
 
-        def call_bck():
+        def call_bck(a):
             print('CALLBACK..!')
+            print(a)
 
         # self.receiver_controller._send_launch_message(
         #     self.new_idle_app_id,
