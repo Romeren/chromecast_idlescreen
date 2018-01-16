@@ -21,6 +21,7 @@ class cast_idle_sceen(object):
         self.new_cast_status(self.device.status)
 
     def new_cast_status(self, status):
+        print(status)
         if(status.is_stand_by and
                 status.app_id == self.backdrop_id):
             self.on_idle_state(status)
@@ -51,8 +52,11 @@ def get_chromecast():
 
 def cast_website(web_site):
     cast = get_chromecast()
-    idle_screen = cast_idle_sceen(cast, 'F6EF1BA7')
+    raw_input('GET')
+    idle_screen = cast_idle_sceen(cast, 'A27D4C78')
+    raw_input('GET')
     controller = cont.DashboardController(web_site)
+    raw_input('GET')
     idle_screen.register_controller(controller)
 
 cast_website('http://google.nl')
