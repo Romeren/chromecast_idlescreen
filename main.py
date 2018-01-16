@@ -1,6 +1,5 @@
 import pychromecast as pyc
 import controller as cont
-import time
 
 
 class cast_idle_sceen(object):
@@ -34,9 +33,7 @@ class cast_idle_sceen(object):
         # self.device.start_app(self.new_idle_app_id)
 
         def call_bck(a):
-            print('CALLBACK..!')
-            print(a)
-
+            pass
         # self.receiver_controller._send_launch_message(
         #     self.new_idle_app_id,
         #     force_launch=True,
@@ -46,37 +43,34 @@ class cast_idle_sceen(object):
         self.receiver_controller.app_launch_event.clear()
         self.receiver_controller.app_launch_event_function = call_bck
         self.receiver_controller.launch_failure = None
-
         self.receiver_controller.send_message({'type': 'LAUNCH',
                                               'appId': self.new_idle_app_id},
                                               callback_function=call_bck)
-        print('Start_app sent')
+        # print('Start_app sent')
 
     def on_idle_app_start(self):
         print('On Start Command')
         self.idle_controller.on_app_start()
 
 
-def get_chromecast():
+def get_chromecast(fallback_ip='192.168.2.1'):
     chromecasts = pyc.get_chromecasts()
     cast = None
     if(len(chromecasts) == 0):
-        cast = pyc.Chromecast('192.168.2.3')
+        cast = pyc.Chromecast(fallback_ip)
     else:
         cast = chromecasts[0]
     cast.wait()
     return cast
 
 
-def cast_website(web_site):
-    cast = get_chromecast()
-    # raw_input('GET')
-    idle_screen = cast_idle_sceen(cast, 'A27D4C78')
-    # raw_input('GET')
+def cast_website(web_site, fallback_ip, app_id='A27D4C78'):
+    cast = get_chromecast(fallback_ip)
+    idle_screen = cast_idle_sceen(cast, app_id)
     controller = cont.DashboardController(web_site)
-    # raw_input('GET')
     idle_screen.register_controller(controller)
 
-cast_website('http://google.nl')
+cast_website('http://192.168.2.1:8080/home',
+             '192.168.2.1',
+             'A27D4C78')
 raw_input('ENTER to quit')
-print('exiting')
