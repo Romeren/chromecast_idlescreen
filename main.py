@@ -31,8 +31,11 @@ class cast_idle_sceen(object):
 
     def on_idle_state(self, status):
         print("Starting idle app")
-        self.device.start_app(self.new_idle_app_id)
-        # print('Start_app sent')
+        # self.device.start_app(self.new_idle_app_id)
+        self.receiver_controller.launch_app(
+            self.new_idle_app_id,
+            force_launch=True)
+        print('Start_app sent')
 
     def on_idle_app_start(self):
         print('On Start Command')
@@ -52,11 +55,11 @@ def get_chromecast():
 
 def cast_website(web_site):
     cast = get_chromecast()
-    raw_input('GET')
+    # raw_input('GET')
     idle_screen = cast_idle_sceen(cast, 'A27D4C78')
-    raw_input('GET')
+    # raw_input('GET')
     controller = cont.DashboardController(web_site)
-    raw_input('GET')
+    # raw_input('GET')
     idle_screen.register_controller(controller)
 
 cast_website('http://google.nl')
