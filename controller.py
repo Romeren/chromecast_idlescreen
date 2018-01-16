@@ -15,7 +15,7 @@ class DashboardController(BaseController):
 
     def __init__(self, start_url):
         super(DashboardController, self).__init__(
-            "urn:x-cast:dashboard.com.framework", "F6EF1BA7")
+            "urn:x-cast:dashboard.com.framework", "3DE1951C")
         self.start_url = start_url
 
     def stop(self):
