@@ -36,10 +36,19 @@ class cast_idle_sceen(object):
         def call_bck():
             print('CALLBACK..!')
 
-        self.receiver_controller._send_launch_message(
-            self.new_idle_app_id,
-            force_launch=True,
-            callback_function=call_bck)
+        # self.receiver_controller._send_launch_message(
+        #     self.new_idle_app_id,
+        #     force_launch=True,
+        #     callback_function=call_bck)
+
+        self.receiver_controller.app_to_launch = self.new_idle_app_id
+        self.receiver_controller.app_launch_event.clear()
+        self.receiver_controller.app_launch_event_function = call_bck
+        self.receiver_controller.launch_failure = None
+
+        self.receiver_controller.send_message({'type': 'LAUNCH',
+                                              'appId': self.new_idle_app_id},
+                                              callback_function=call_bck)
         print('Start_app sent')
 
     def on_idle_app_start(self):
