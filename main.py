@@ -10,6 +10,8 @@ class cast_idle_sceen(object):
         self.device = device
         self.socket_client = self.device.socket_client
 
+        self.isRunningNewIdleApp = False
+
         self.receiver_controller = self.socket_client.receiver_controller
         self.receiver_controller.register_status_listener(self)
         self.new_idle_app_id = new_idle_app_id
@@ -24,10 +26,14 @@ class cast_idle_sceen(object):
         print(status)
         if(status.is_stand_by and
                 status.app_id == self.backdrop_id):
+            self.isRunningNewIdleApp = False
             self.on_idle_state(status)
         elif(status.app_id == self.new_idle_app_id and
              status.status_text == 'Reciever ready...'):
             self.on_idle_app_start()
+            self.isRunningNewIdleApp = True
+        else:
+            self.isRunningNewIdleApp = False
 
     def on_idle_state(self, status):
         print("Starting idle app")
@@ -54,7 +60,7 @@ class cast_idle_sceen(object):
         self.idle_controller.on_app_start()
 
     def send_keypress(self, code, state):
-        if(state == 1):
+        if(self.isRunningNewIdleApp and state == 1):
             self.idle_controller.send_msg({'pressed_key': code})
 
 
