@@ -1,5 +1,6 @@
 import pychromecast as pyc
 import controller as cont
+from evdev import InputDevice, categorize, ecodes
 
 
 class cast_idle_sceen(object):
@@ -52,6 +53,10 @@ class cast_idle_sceen(object):
         print('On Start Command')
         self.idle_controller.on_app_start()
 
+    def send_keypress(self, code, state):
+        if(state == 1):
+            self.idle_controller.send_msg({'pressed_key': code})
+
 
 def get_chromecast(fallback_ip='192.168.2.1'):
     chromecasts = pyc.get_chromecasts()
@@ -69,8 +74,17 @@ def cast_website(web_site, fallback_ip, app_id='A27D4C78'):
     idle_screen = cast_idle_sceen(cast, app_id)
     controller = cont.DashboardController(web_site)
     idle_screen.register_controller(controller)
+    return idle_screen
 
-cast_website('http://192.168.2.1:8080/home',
-             '192.168.2.1',
-             'A27D4C78')
-raw_input('ENTER to quit')
+
+controller = cast_website('http://192.168.2.1:8080/home',
+                          '192.168.2.1',
+                          'A27D4C78')
+
+dev = InputDevice('/dev/input/event0')
+for e in dev.read_loop():
+    if(e.type == ecodes.EV_KEY):
+        event = categorize(e)
+        code = event.keycode
+        state = event.keystate
+        controller.send_keypress(code, state)
